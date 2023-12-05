@@ -13,6 +13,9 @@ let userSchema = mongoose.Schema({
   phone: {
     type: String,
   },
+  Address:{
+    type:String
+  },
   profilePic: {
     type: String,
   },

@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import cors from 'cors';
 dotenv.config();
 
 
@@ -13,6 +14,8 @@ connectDB()
 const app=express()
 
 
+
+app.use(cors({ origin: 'http://localhost:2001'}));
 app.use(express.static("backend/public"));
 app.use(express.json());
 app.use(cookieParser());

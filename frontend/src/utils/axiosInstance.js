@@ -6,8 +6,23 @@ const axiosInstance = axios.create({
     headers: {
       'Content-Type': 'application/json',
     },
-    withCredentials: true, // If needed for cross-origin requests
+    withCredentials: true, 
   });
+  
+  axiosInstance.interceptors.request.use(
+    async (config) => {
+      const token = localStorage.getItem('SkyUser');
+      
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+  
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
   
 
   export default axiosInstance;

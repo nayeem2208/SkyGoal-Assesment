@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // import animationData from '../assets/cycle - 1700746773362.json';
 import './auth.css';
 import axiosInstance from '../utils/axiosInstance';
-import { useAuth } from '../utils/userContext';
+import { useAuth } from '../utils/userContext.jsx';
 import { Link, useNavigate } from 'react-router-dom'; 
 
 
@@ -34,9 +34,9 @@ function Signup() {
     e.preventDefault();
     try {
       let res=await axiosInstance.post('/signup',details)
-      localStorage.setItem('PsUser',JSON.stringify(res.data.user))
-      setUser(res.data)
-
+      localStorage.setItem('SkyUser',res.data.token)
+      setUser(res.data.newUser)
+    console.log(user,'user')
     } catch (error) {
       console.log(error.message)
     }
