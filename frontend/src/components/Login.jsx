@@ -24,6 +24,7 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(user,'user')
     if (user) {
       navigate("/");
     }
@@ -33,9 +34,8 @@ function Login() {
     e.preventDefault();
     try {
       let res = await axiosInstance.post("/login", details);
-    //   localStorage.setItem("SkyUser", JSON.stringify(res.data.user));
-    //   setUser(res.data);
-      console.log(res);
+      localStorage.setItem("SkyUser", res.data.token);
+      setUser(res.data.user);
     } catch (error) {
       console.log(error.message);
     }

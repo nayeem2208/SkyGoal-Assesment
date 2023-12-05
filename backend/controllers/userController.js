@@ -10,11 +10,9 @@ const login = async (req, res) => {
         let token = generateToken(res, user._id);
         res.status(200).json({ user, token });
       } else {
-        console.log("wrong password");
         res.status(401).json("Wrong password");
       }
     } else {
-      console.log("wrong email");
       res.status(401).json("Wrong email");
     }
   } catch (error) {
@@ -23,30 +21,61 @@ const login = async (req, res) => {
   }
 };
 
-const register=async(req,res)=>{
+const register = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    let user = await usermodel.findOne({ email });
+    if (user) {
+      res.status(409).json("User already exist");
+    } else {
+      let newUser = await usermodel.create({
+        email,
+        password,
+      });
+      if (newUser) {
+        let token = generateToken(res, newUser._id);
+        res.status(200).json({ newUser, token });
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
+const getUserDetails=async(req,res)=>{
     try {
-        console.log(req.body,'bodyyyyyyyyyy')
-        const {email,password}=req.body
-        console.log(email,'email')
-        let user=await usermodel.findOne({email})
-        console.log(user,'user')
-        if(user){
-            res.status(409).json('User already exist')
-        }
-        else{
-            let newUser=await usermodel.create({
-                email,
-                password
-            })
-            if(newUser){
-                generateToken(res.newUser._id)
-                res.status(200).json('Its working')
-            }
-        }
+       const email=req.user.email
+       const user=await usermodel.findOne({email})
+       if(user){
+        res.status(200).json(user)
+       }
+       else{
+        res.status(401).json('Unauthorised user')
+       }
     } catch (error) {
-        console.log(error)
         res.status(400).json(error)
     }
 }
 
-export { login,register };
+const editDetails = async (req, res) => {
+  try {
+    let { name, phone, email, address } = req.body.userData;
+    console.log(address, "addresss");
+    let user = await usermodel.findOne({ email: email });
+    if (user) {
+      user.name = name;
+      user.phone = phone;
+      user.Address = address;
+      const saveUser = await user.save();
+      res.status(200).json({ saveUser });
+    } else {
+      res.status(404).json("user not found");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
+export { login, register, getUserDetails,editDetails };
