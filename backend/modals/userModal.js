@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 let userSchema = mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique:true
-  },
   name:{
     type: String,
   },
