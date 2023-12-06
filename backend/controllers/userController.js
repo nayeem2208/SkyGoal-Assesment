@@ -60,13 +60,14 @@ const getUserDetails=async(req,res)=>{
 
 const editDetails = async (req, res) => {
   try {
-    let { name, phone, email, address } = req.body.userData;
-    console.log(address, "addresss");
+    let { name, phone, email, address } = req.body;
     let user = await usermodel.findOne({ email: email });
     if (user) {
-      user.name = name;
-      user.phone = phone;
-      user.Address = address;
+      user.name = name?name:'';
+      user.phone = phone?phone:'';
+      user.Address = address?address:'';
+      user.profilePic=req.file?.filename
+
       const saveUser = await user.save();
       res.status(200).json({ saveUser });
     } else {

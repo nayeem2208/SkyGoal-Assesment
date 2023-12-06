@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "./auth.css";
 import { useAuth } from "../utils/userContext.jsx";
 import axiosInstance from "../utils/axiosInstance";
+import { motion } from 'framer-motion'
+import { delay } from 'framer-motion/dom';
 
 // const defaultOptions = {
 //   loop: true,
@@ -25,7 +27,7 @@ function Login() {
 
   useEffect(() => {
     console.log(user,'user')
-    if (user) {
+    if (user&& Object.keys(user).length > 0) {
       navigate("/");
     }
   }, [user]);
@@ -47,20 +49,24 @@ function Login() {
         <Lottie options={defaultOptions} />
       </div> */}
       <div className="flex justify-center">
-        <h1
+        <motion.h1
           className="font-bold text-white"
           style={{
             fontSize: "15vh",
           }}
+          transition={{delay:1,duration:0.4}}
+          animate={{x:0,scale:1}}
+          initial={{x:1000,scale:0}}
         >
           SkyGoal
-        </h1>
+        </motion.h1>
       </div>
       <div className="flex justify-center items-center  w-2/6 mx-auto">
         <div className="container">
-          <div className="heading">Log In</div>
+          <motion.div className="heading" whileHover={{scale:1.1}}>Log In</motion.div>
           <form className="form" onSubmit={handleSubmit}>
-            <input
+            <motion.input
+            whileHover={{scale:1.1}}
               required
               className="input"
               type="email"
@@ -71,7 +77,8 @@ function Login() {
                 setDetails({ ...details, email: e.target.value })
               }
             />
-            <input
+            <motion.input
+            whileHover={{scale:1.1}}
               required
               className="input"
               type="password"
@@ -84,12 +91,12 @@ function Login() {
             />
             <input className="login-button" type="submit" value="Log In" />
           </form>
-          <div className="signup-link text-xs flex justify-center">
+          <motion.div className="signup-link text-xs flex justify-center" whileHover={{scale:1.1}}>
             Don't have an account?{" "}
             <Link to="/signup" className="font-bold text-sky-700">
               Sign up
             </Link>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
