@@ -1,1 +1,2 @@
-![psGen](https://github.com/nayeem2208/SkyGoal-Assesment/assets/124780866/148cd7d8-7c8b-42b9-924c-bd9c82041d93)
+
+![Screenshot (164)](https://github.com/nayeem2208/SkyGoal-Assesment/assets/124780866/a03594e0-d164-4202-9103-567a82e8a229)
